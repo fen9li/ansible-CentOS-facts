@@ -914,3 +914,39 @@ ansicli01.fen9.li | SUCCESS => {
 [fli@ansible ansible]$
 
 ```
+
+### Usecase
+
+```
+[fli@ansible ansible]$ vim playbooks/os.yml
+[fli@ansible ansible]$ cat playbooks/os.yml
+---
+- name: print out operating system facts
+  hosts: all
+  gather_facts: True
+
+  tasks:
+  - debug: var=ansible_env.LOGNAME
+[fli@ansible ansible]$ ansible-playbook playbooks/os.yml
+
+PLAY [print out operating system facts] ****************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ansicli01.fen9.li]
+ok: [ansicli02.fen9.li]
+
+TASK [debug] *******************************************************************
+ok: [ansicli01.fen9.li] => {
+    "ansible_env.LOGNAME": "fli"
+}
+ok: [ansicli02.fen9.li] => {
+    "ansible_env.LOGNAME": "fli"
+}
+
+PLAY RECAP *********************************************************************
+ansicli01.fen9.li          : ok=2    changed=0    unreachable=0    failed=0
+ansicli02.fen9.li          : ok=2    changed=0    unreachable=0    failed=0
+
+[fli@ansible ansible]$
+
+```
